@@ -242,6 +242,35 @@ void Robot::setAlphaBetaFast(double newAlpha, double newBeta){
     );
 }
 
+void Robot::updateCollisionGeometryOnly(double newAlpha, double newBeta){
+    vec2 tmp2;
+    vec3 tmp3;
+
+    alpha = newAlpha;
+    beta = newBeta;
+    vec2 alphaBeta = {newAlpha, newBeta};
+
+    // Only update collision segment (needed for collision detection)
+    // Skip fiber positions (metWokXYZ, bossWokXYZ, apWokXYZ)
+    tmp2 = positionerToTangent(
+        alphaBeta, collisionSegBetaXY[0], alphaLen, alphaOffDeg, betaOffDeg
+    );
+    tmp3 = {tmp2[0], tmp2[1], 0};
+    collisionSegWokXYZ[0] = tangentToWok(
+        tmp3, basePos, iHat, jHat, kHat, elementHeight, scaleFac,
+        dxyz[0], dxyz[1], dxyz[2]
+    );
+
+    tmp2 = positionerToTangent(
+        alphaBeta, collisionSegBetaXY[1], alphaLen, alphaOffDeg, betaOffDeg
+    );
+    tmp3 = {tmp2[0], tmp2[1], 0};
+    collisionSegWokXYZ[1] = tangentToWok(
+        tmp3, basePos, iHat, jHat, kHat, elementHeight, scaleFac,
+        dxyz[0], dxyz[1], dxyz[2]
+    );
+}
+
 bool Robot::isValidDither(vec2 newAlphaBeta){
     // check that there is no alpha or beta wrapping happening
     if (std::isnan(newAlphaBeta[0]) or std::isnan(newAlphaBeta[1])){
@@ -561,8 +590,7 @@ vec2 Robot::alphaBetaFromWokXYZ(vec3 wokXYZ, FiberType fiberType){
 
 void Robot::assignTarget(long targetID){
     // assigns the target and set alpha beta accordingly
-    int ii = std::count(validTargetIDs.begin(), validTargetIDs.end(), targetID);
-    if (ii == 0){
+    if (validTargetIDs.find(targetID) == validTargetIDs.end()){
         throw std::runtime_error("assignTarget failure, invalid target");
     }
     assignedTargetID = targetID;

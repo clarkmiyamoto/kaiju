@@ -82,6 +82,7 @@ public:
     bool isCollided(int robotID);
     std::tuple<bool, bool, bool, std::vector<int>> isCollidedWithAssigned(int robotID);
     std::tuple<bool, bool, bool, std::vector<int>> wouldCollideWithAssigned(int robotID, long targID);
+    std::tuple<bool, bool, bool, std::vector<int>> wouldCollideWithAssignedFast(int robotID, long targID);
     std::vector<int> robotColliders(int robotID);
     std::vector<int> fiducialColliders(int robotID);
     std::vector<int> gfaColliders(int robotID);

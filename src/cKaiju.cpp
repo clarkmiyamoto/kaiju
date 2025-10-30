@@ -124,6 +124,7 @@ PYBIND11_MODULE(cKaiju, m) {
         .def("setAlphaBeta", &Robot::setAlphaBeta, R"pbdoc(
             A doc example
         )pbdoc")
+        .def("updateCollisionGeometryOnly", &Robot::updateCollisionGeometryOnly)
         .def("setDestinationAlphaBeta", &Robot::setDestinationAlphaBeta)
         .def("setXYUniform", &Robot::setXYUniform)
         .def("randomXYUniform", &Robot::randomXYUniform)
@@ -219,5 +220,6 @@ PYBIND11_MODULE(cKaiju, m) {
 
         .def("isCollidedWithAssigned", &RobotGrid::isCollidedWithAssigned)
         .def("wouldCollideWithAssigned", &RobotGrid::wouldCollideWithAssigned)
+        .def("wouldCollideWithAssignedFast", &RobotGrid::wouldCollideWithAssignedFast)
         .def("isCollided", &RobotGrid::isCollided);
 }
