@@ -81,7 +81,7 @@ void RobotGrid::addTarget(long targetID, vec3 xyzWok, FiberType fiberType, doubl
     for (auto rPair : robotDict){
         auto r = rPair.second;
         if (isValidAssignment(r->id, targetID)){
-            r->validTargetIDs.push_back(targetID);
+            r->validTargetIDs.insert(targetID);
             targetDict[targetID]->validRobotIDs.push_back(r->id);
         }
     }
@@ -643,8 +643,7 @@ void RobotGrid::assignRobot2Target(int robotID, long targetID){
     auto robot = robotDict[robotID];
     auto target = targetDict[targetID];
 
-    int ii = std::count(robot->validTargetIDs.begin(), robot->validTargetIDs.end(), targetID);
-    if (ii == 0){
+    if (robot->validTargetIDs.find(targetID) == robot->validTargetIDs.end()){
         throw std::runtime_error("target not valid for robot");
     }
     unassignRobot(robotID);

@@ -561,8 +561,7 @@ vec2 Robot::alphaBetaFromWokXYZ(vec3 wokXYZ, FiberType fiberType){
 
 void Robot::assignTarget(long targetID){
     // assigns the target and set alpha beta accordingly
-    int ii = std::count(validTargetIDs.begin(), validTargetIDs.end(), targetID);
-    if (ii == 0){
+    if (validTargetIDs.find(targetID) == validTargetIDs.end()){
         throw std::runtime_error("assignTarget failure, invalid target");
     }
     assignedTargetID = targetID;

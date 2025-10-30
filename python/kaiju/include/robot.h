@@ -6,6 +6,7 @@
 #include <list>
 #include <array>
 #include <map>
+#include <unordered_set>
 #include <algorithm>
 #include "target.h" // has FiberType
 
@@ -76,7 +77,7 @@ public:
     std::vector<int> robotNeighbors; // robot IDs in RobotGrid.robotDict may potentially collide
     std::vector<int> fiducialNeighbors; // fiducial IDs in RobotGrid.fiducialDict may potentially collide
     std::vector<int> gfaNeighbors; // gfa IDs in RobotGrid.gfaDict may potentially collide
-    std::vector<long> validTargetIDs; // target IDs in RobotGrid.targetDict that I can reach
+    std::unordered_set<long> validTargetIDs; // target IDs in RobotGrid.targetDict that I can reach
     Robot (int id, std::string holeID, vec3 basePos, vec3 iHat, vec3 jHat,
             vec3 kHat, vec3 dxyz, double alphaLen, double alphaOffDeg,
             double betaOffDeg, double elementHeight, double scaleFac, vec2 metBetaXY,
